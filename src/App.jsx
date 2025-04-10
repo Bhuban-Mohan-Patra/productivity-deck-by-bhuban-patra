@@ -10,7 +10,7 @@ const App = () => (
     <Route exact component={KanbanMode} path={routes.kanban} />
     <Route exact component={NewsMode} path={routes.news} />
     <Route exact component={PomodoroMode} path={routes.pomodoro} />
-    <Redirect exact from="/" to={routes.kanban} />
+    <Redirect exact from={routes.root} to={routes.kanban} />
   </Switch>
 );
 

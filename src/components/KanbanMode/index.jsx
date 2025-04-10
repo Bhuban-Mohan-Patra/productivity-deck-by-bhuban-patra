@@ -1,5 +1,12 @@
 import React from "react";
 
-const KanbanMode = () => <div>KanbanMode</div>;
+import { Sidebar } from "components/commons";
+
+const KanbanMode = () => (
+  <div className="flex h-screen ">
+    <Sidebar />
+    <div>kanban mode</div>
+  </div>
+);
 
 export default KanbanMode;
