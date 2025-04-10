@@ -1,11 +1,14 @@
 import React from "react";
 
 import { Sidebar } from "components/commons";
+import Header from "components/commons/Header";
 
 const PomodoroMode = () => (
   <div className="flex h-screen ">
     <Sidebar />
-    <div>pomodoro</div>
+    <div className="w-full">
+      <Header title="Pomodoro mode" />
+    </div>
   </div>
 );
 
