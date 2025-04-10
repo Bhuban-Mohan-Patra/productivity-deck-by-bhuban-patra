@@ -1,15 +1,39 @@
 import React, { useEffect, useState } from "react";
 
+import { Play } from "@bigbinary/neeto-icons";
 import { Sidebar } from "components/commons";
 import Header from "components/commons/Header";
 import { Button } from "neetoui";
 
+import { SESSIONS, SESSIONS_ORDER } from "./constants";
+
 const PomodoroMode = () => {
-  const [timer, setTimer] = useState(25 * 60);
+  const [sessionIndex, setSessionIndex] = useState(0);
+  const [timerSession, setTimerSession] = useState(
+    SESSIONS_ORDER[sessionIndex]
+  );
+
+  const [timer, setTimer] = useState(SESSIONS.Pomodoro.duration);
   const [isRunning, setIsRunning] = useState(false);
 
   const handleClick = () => {
     setIsRunning(prevState => !prevState);
+  };
+
+  const switchStage = nextStage => {
+    setIsRunning(false);
+    setTimerSession(nextStage);
+    setTimer(SESSIONS[nextStage].duration);
+  };
+
+  const handleCycleStage = () => {
+    const nextIndex = (sessionIndex + 1) % SESSIONS_ORDER.length;
+    const nextStage = SESSIONS_ORDER[nextIndex];
+
+    setIsRunning(false);
+    setSessionIndex(nextIndex);
+    setTimerSession(nextStage);
+    setTimer(SESSIONS[nextStage].duration);
   };
 
   useEffect(() => {
@@ -44,15 +68,35 @@ const PomodoroMode = () => {
       <div className="w-full">
         <Header title="Pomodoro mode" />
         <div className="mt-4 flex h-4/5 items-center justify-center">
-          <div className="flex flex-col items-center rounded-md border border-black">
-            <div className="flex justify-center space-x-4">Pomodoro</div>
-            <div>{formatedTimer}</div>
-            <div className="flex gap-1">
+          <div className="flex h-3/5 w-1/3 flex-col items-center justify-center gap-20 rounded-md border border-black">
+            <div className="flex justify-center gap-3 space-x-4">
+              {Object.keys(SESSIONS).map(session => (
+                <Button
+                  key={session}
+                  style="tertiary"
+                  className={`border  px-4 py-2 font-semibold ${
+                    session === timerSession ? "bg-gray-200" : ""
+                  }`}
+                  onClick={() => switchStage(session)}
+                >
+                  {session.replace(/([A-Z])/g, " $1").trim()}
+                </Button>
+              ))}
+            </div>
+            <div className="text-8xl font-bold">{formatedTimer}</div>
+            <div className="flex items-center gap-3">
               <Button
                 label={isRunning ? "Pause" : "Start"}
-                style="primary"
+                style="secondary"
                 onClick={handleClick}
               />
+              {isRunning && (
+                <Play
+                  className="cursor-pointer"
+                  color="#1e1e20"
+                  onClick={handleCycleStage}
+                />
+              )}
             </div>
           </div>
         </div>
