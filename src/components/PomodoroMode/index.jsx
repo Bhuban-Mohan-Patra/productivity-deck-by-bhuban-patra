@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { Play } from "@bigbinary/neeto-icons";
-import { Sidebar } from "components/commons";
-import Header from "components/commons/Header";
+import { Sidebar, Header } from "components/commons";
 import { Button } from "neetoui";
 
 import { SESSIONS, SESSIONS_ORDER } from "./constants";
@@ -34,6 +33,11 @@ const PomodoroMode = () => {
     setSessionIndex(nextIndex);
     setTimerSession(nextStage);
     setTimer(SESSIONS[nextStage].duration);
+  };
+
+  const handleReset = () => {
+    setIsRunning(false);
+    setTimer(SESSIONS[timerSession].duration);
   };
 
   useEffect(() => {
@@ -84,12 +88,18 @@ const PomodoroMode = () => {
               ))}
             </div>
             <div className="text-8xl font-bold">{formatedTimer}</div>
-            <div className="flex items-center gap-3">
+            <div className="mb-1 flex items-center gap-3">
               <Button
                 label={isRunning ? "Pause" : "Start"}
                 size="large"
                 style="secondary"
                 onClick={handleClick}
+              />
+              <Button
+                label="Reset"
+                size="large"
+                style="secondary"
+                onClick={handleReset}
               />
               {isRunning && (
                 <Play
