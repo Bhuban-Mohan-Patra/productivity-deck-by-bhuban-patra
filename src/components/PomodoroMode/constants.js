@@ -4,16 +4,16 @@ export const SESSIONS = {
     bg: "bg-red-500",
     // message: "Time to focus!",
   },
-  ShortBreak: {
+  Shortbreak: {
     duration: 5 * 60,
     bg: "bg-green-500",
     // message: "Time for a short break!",
   },
-  LongBreak: {
+  Longbreak: {
     duration: 15 * 60,
     bg: "bg-blue-500",
     // message: "Relax, it’s a long break!",
   },
 };
 
-export const SESSIONS_ORDER = ["Pomodoro", "ShortBreak", "LongBreak"];
+export const SESSIONS_ORDER = ["Pomodoro", "Shortbreak", "Longbreak"];
