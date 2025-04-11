@@ -1,18 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { DragDropContext } from "@hello-pangea/dnd";
 import { Sidebar, Header } from "components/commons";
+import useKanbanStore from "stores/useKanbanStore";
 
 import Column from "./Column";
 
-const initialData = {
-  Todo: ["Task 1", "Task 2"],
-  "In progress": ["Task 3"],
-  Done: ["Task 4"],
-};
-
 const KanbanMode = () => {
-  const [columns, setColumns] = useState(initialData);
+  const { columns, setColumns } = useKanbanStore();
 
   const handleDragEnd = result => {
     const { source, destination } = result;
