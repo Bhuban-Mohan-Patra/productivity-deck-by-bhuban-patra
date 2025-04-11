@@ -1,13 +1,7 @@
 import axios from "axios";
 
-// const show = () =>
-//   axios.get("/", {
-//     params: {
-//       q: "google",
-//     },
-//   });
-const show = () => axios.get("/", { params: { q: "google" } });
+const fetch = () => axios.get("/", { params: { q: "google" } });
 
-const newsApi = { show };
+const newsApi = { fetch };
 
 export default newsApi;
