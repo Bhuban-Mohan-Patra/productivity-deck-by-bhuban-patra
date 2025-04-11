@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const fetch = ({ searchTerm = "google" }) =>
-  axios.get("/", { params: { q: searchTerm } });
+const fetch = ({ searchTerm }) => axios.get("/", { params: { q: searchTerm } });
 
 const newsApi = { fetch };
 

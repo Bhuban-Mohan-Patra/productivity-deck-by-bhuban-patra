@@ -4,27 +4,18 @@ import { Search } from "@bigbinary/neeto-icons";
 import { Sidebar } from "components/commons";
 import Header from "components/commons/Header";
 import { useFetchNews } from "hooks/reactQuery/useNewsApi";
+import useDebounce from "hooks/useDebounce";
 import { Input } from "neetoui";
 
 const NewsMode = () => {
-  // const [news, setNews] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // const fetchNews = async () => {
-  //   const response = await newsApi.fetch();
-  //   setNews(response.articles);
-  // };
-
-  // useEffect(() => {
-  //   fetchNews();
-  // }, []);
+  const debouncedSearchKey = useDebounce(searchTerm);
 
   const newsParams = {
-    searchTerm,
+    searchTerm: debouncedSearchKey,
   };
 
-  // const { data: { articles: news = [], totalResults } = {}, isLoading } =
-  //   useFetchNews(newsParams);
   const { data: { articles: news = [] } = {} } = useFetchNews(newsParams);
 
   return (
