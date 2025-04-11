@@ -7,4 +7,5 @@ export const useFetchNews = params =>
   useQuery({
     queryKey: [QUERY_KEYS.NEWS, params],
     queryFn: () => newsApi.fetch(params),
+    enabled: !!params.searchTerm,
   });
