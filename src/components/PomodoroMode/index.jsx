@@ -79,7 +79,7 @@ const PomodoroMode = () => {
                   }`}
                   onClick={() => switchStage(session)}
                 >
-                  {session.replace(/([A-Z])/g, " $1").trim()}
+                  {session}
                 </Button>
               ))}
             </div>
@@ -87,6 +87,7 @@ const PomodoroMode = () => {
             <div className="flex items-center gap-3">
               <Button
                 label={isRunning ? "Pause" : "Start"}
+                size="large"
                 style="secondary"
                 onClick={handleClick}
               />
@@ -94,6 +95,7 @@ const PomodoroMode = () => {
                 <Play
                   className="cursor-pointer"
                   color="#1e1e20"
+                  size={32}
                   onClick={handleCycleStage}
                 />
               )}
