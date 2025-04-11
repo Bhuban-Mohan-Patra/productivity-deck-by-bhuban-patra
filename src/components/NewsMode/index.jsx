@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
 import { Search } from "@bigbinary/neeto-icons";
-import { Sidebar } from "components/commons";
-import Header from "components/commons/Header";
+import { Sidebar, Header } from "components/commons";
 import { useFetchNews } from "hooks/reactQuery/useNewsApi";
 import useDebounce from "hooks/useDebounce";
 import { Input } from "neetoui";
