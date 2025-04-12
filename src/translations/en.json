@@ -1,0 +1,11 @@
+{
+  "pomodoro": {
+    "pomodoroMode": "Pomodoro mode",
+    "start": "Start",
+    "pause": "Pause",
+    "reset": "Reset",
+    "Pomodoro": "Pomodoro",
+    "Shortbreak": "Short break",
+    "Longbreak": "Long break"
+  }
+}
