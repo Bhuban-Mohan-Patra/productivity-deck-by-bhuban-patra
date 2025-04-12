@@ -1,15 +1,17 @@
+import { t } from "i18next";
+
 export const getNewsSourceOptions = () => [
-  { label: "bbcNews", value: "bbc-news" },
-  { label: "theVerge", value: "the-verge" },
-  { label: "businessInsider", value: "business-insider" },
-  { label: "time", value: "time" },
-  { label: "theNextWeb", value: "the-next-web" },
-  { label: "abcNews", value: "abc-news" },
-  { label: "engadget", value: "engadget" },
+  { label: t("news.sources.bbcNews"), value: "bbc-news" },
+  { label: t("news.sources.theVerge"), value: "the-verge" },
+  { label: t("news.sources.businessInsider"), value: "business-insider" },
+  { label: t("news.sources.time"), value: "time" },
+  { label: t("news.sources.theNextWeb"), value: "the-next-web" },
+  { label: t("news.sources.abcNews"), value: "abc-news" },
+  { label: t("news.sources.engadget"), value: "engadget" },
   {
-    label: "entertainmentWeekly",
+    label: t("news.sources.entertainmentWeekly"),
     value: "entertainmentWeekly",
   },
-  { label: "espn", value: "espn" },
-  { label: "financialPost", value: "financial-post" },
+  { label: t("news.sources.espn"), value: "espn" },
+  { label: t("news.sources.financialPost"), value: "financial-post" },
 ];

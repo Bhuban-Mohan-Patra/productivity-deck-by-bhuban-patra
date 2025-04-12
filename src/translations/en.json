@@ -17,6 +17,61 @@
   },
   "common": {
     "cancel": "Cancel",
-    "delete": "Delete"
+    "delete": "Delete",
+    "save": "Save"
+  },
+  "news": {
+    "noNewsToShow": "No news to show",
+    "clearAll": "Clear all",
+    "results": "results",
+    "knowMore": "Know more",
+    "anonymous": "Anonymous",
+    "filter": {
+      "title": "Filter News",
+      "keywordLabel": "Keyword or a phrase",
+      "keywordPlaceholder": "Enter keyword or a phrase",
+      "dateLabel": "Date of publication",
+      "datePlaceholder": "DD/MM/YYYY"
+    },
+    "list": {
+      "category": "Category",
+      "selectSource": "Select news source"
+    },
+    "common": {
+      "done": "Done",
+      "clearAll": "Clear all"
+    },
+    "categories": {
+      "business": "Business",
+      "entertainment": "Entertainment",
+      "general": "General",
+      "health": "Health",
+      "science": "Science",
+      "sports": "Sports",
+      "technology": "Technology"
+    },
+    "sourcesModal": {
+      "title": "Change source",
+      "sourceLabel": "News source",
+      "sourcePlaceholder": "Select source"
+    },
+    "sources": {
+      "bbcNews": "BBC News",
+      "theVerge": "The Verge",
+      "businessInsider": "Business Insider",
+      "time": "Time",
+      "theNextWeb": "The Next Web",
+      "abcNews": "ABC News",
+      "engadget": "Engadget",
+      "entertainmentWeekly": "Entertainment Weekly",
+      "espn": "ESPN",
+      "financialPost": "Financial Post"
+    }
+  },
+  "News Mode": "News mode",
+  "clearAll": "Clear all",
+  "pageNotFound": {
+    "title": "The page you're looking for can't be found",
+    "buttonLabel": "Back to home"
   }
 }

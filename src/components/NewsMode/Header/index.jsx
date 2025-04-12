@@ -1,62 +1,81 @@
-import { useState } from "react";
-
-import { Search } from "@bigbinary/neeto-icons";
+import { Button, Tag } from "@bigbinary/neetoui";
 import useFuncDebounce from "hooks/useFuncDebounce";
 import useQueryParams from "hooks/useQueryParams";
-import { filterNonNull } from "neetocist";
-import { Input, Typography } from "neetoui";
-import { assoc } from "ramda";
+import { Typography } from "neetoui";
+import { isEmpty } from "ramda";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
-import routes from "routes";
-import { buildUrl } from "utils/url";
 
 import Filter from "./Filter";
 import Sources from "./Sources";
 
-const Header = () => {
-  const [searchKey, setSearchKey] = useState("");
+import SearchBar from "../SearchBar";
+import {
+  flatQueryParams,
+  removeTagFromQueryParams,
+  updateSearchTermInQueryParams,
+} from "../utils";
 
+const Header = ({ totalResults }) => {
   const history = useHistory();
+
+  const { t } = useTranslation();
 
   const queryParams = useQueryParams();
 
-  const updateSearchTermInQueryParams = useFuncDebounce(searchTerm => {
-    history.replace(
-      buildUrl(
-        routes.news,
-        filterNonNull(
-          assoc("searchTerm", searchTerm || null, searchTerm ? queryParams : {})
-        )
-      )
-    );
-  });
+  const tags = flatQueryParams(queryParams);
 
-  const handleSearchKeyChange = ({ target: { value } }) => {
-    updateSearchTermInQueryParams(value);
-    setSearchKey(value);
+  const clearAll = useFuncDebounce(() =>
+    updateSearchTermInQueryParams("", queryParams, history)
+  );
+
+  const handleTagClose = (key, val) => {
+    removeTagFromQueryParams(queryParams, key, val, history);
   };
 
   return (
-    <div className="w-full px-4 py-4">
-      <div className="flex justify-between">
+    <div className="space-y-2  p-4">
+      <div className="flex items-center">
         <div className="flex flex-1 items-center gap-4">
           <Typography className="font-bold" style="h1">
-            News Mode
+            {t("News Mode")}
           </Typography>
           <Sources />
           <Filter />
         </div>
-        <div>
-          <Input
-            className="w-96 flex-grow-0"
-            placeholder="Search keyword or a phrase"
-            suffix={<Search />}
-            type="search"
-            value={searchKey}
-            onChange={handleSearchKeyChange}
-          />
-        </div>
+        <SearchBar />
       </div>
+      {!isEmpty(queryParams) && (
+        <div className="flex items-center gap-4">
+          <Typography className="font-medium" style="h5">
+            {totalResults} {t("results")}
+          </Typography>
+          <div className="flex items-center gap-2">
+            {tags.map(obj =>
+              Object.entries(obj)
+                .filter(([_, val]) => Boolean(val))
+                .map(([key, val]) => (
+                  <Tag
+                    className="capitalize"
+                    data-query-key={key}
+                    key={val}
+                    label={val}
+                    style="outline"
+                    onClose={() => handleTagClose(key, val)}
+                  />
+                ))
+            )}
+            <Button
+              className="py-1 text-xs text-gray-500"
+              size="small"
+              style="text"
+              onClick={clearAll}
+            >
+              {t("news.clearAll")}
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
