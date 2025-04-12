@@ -3,21 +3,6 @@ import React from "react";
 import { Typography } from "neetoui";
 
 const Card = () => (
-  // <div className="mt-6 flex justify-between">
-  //   <div>
-  //     <div className="flex gap-2">title</div>
-  //     {/* <Category categories={categories} className="mt-1" /> */}{" "}
-  //     <p>category</p>
-  //     <p className="mt-2 text-sm" />
-  //     <p className="mt-2 text-xs font-bold">name</p>
-  //     <p>date</p>
-  //     <hr className="mt-2" />
-  //   </div>
-  //   <div className="flex w-1/4 flex-col items-center justify-center">
-  //     <img alt="image" src="" />
-  //   </div>
-  // </div>
-
   <div className="mt-10 flex w-full items-start justify-between border-b-2 px-10 py-4 shadow-sm">
     <div className="flex max-w-2xl flex-col gap-6">
       <div className="flex flex-col gap-1">
