@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Play } from "@bigbinary/neeto-icons";
 import { Sidebar, Header } from "components/commons";
 import { Button } from "neetoui";
+import { useTranslation } from "react-i18next";
 
 import { SESSIONS, SESSIONS_ORDER } from "./constants";
 
@@ -14,6 +15,8 @@ const PomodoroMode = () => {
 
   const [timer, setTimer] = useState(SESSIONS.Pomodoro.duration);
   const [isRunning, setIsRunning] = useState(false);
+
+  const { t } = useTranslation();
 
   const handleClick = () => {
     setIsRunning(prevState => !prevState);
@@ -70,7 +73,7 @@ const PomodoroMode = () => {
     <div className="flex h-screen ">
       <Sidebar />
       <div className="w-full">
-        <Header title="Pomodoro mode" />
+        <Header title={t("pomodoro.pomodoroMode")} />
         <div className="mt-4 flex h-4/5 items-center justify-center">
           <div className="flex h-3/5 w-1/3 flex-col items-center justify-center gap-20 rounded-md border border-black">
             <div className="flex justify-center gap-3 space-x-4">
@@ -83,20 +86,20 @@ const PomodoroMode = () => {
                   }`}
                   onClick={() => switchStage(session)}
                 >
-                  {session}
+                  {t(`pomodoro.${session}`)}
                 </Button>
               ))}
             </div>
             <div className="text-8xl font-bold">{formatedTimer}</div>
             <div className="mb-1 flex items-center gap-3">
               <Button
-                label={isRunning ? "Pause" : "Start"}
+                label={isRunning ? t("pomodoro.pause") : t("pomodoro.start")}
                 size="large"
                 style="secondary"
                 onClick={handleClick}
               />
               <Button
-                label="Reset"
+                label={t("pomodoro.reset")}
                 size="large"
                 style="secondary"
                 onClick={handleReset}
