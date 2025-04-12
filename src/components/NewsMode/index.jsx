@@ -5,7 +5,9 @@ import {
   Search,
   Filter as FilterIcon,
 } from "@bigbinary/neeto-icons";
-import { Sidebar, Header } from "components/commons";
+import { Sidebar, Header, EmptyPage } from "components/commons";
+import useFetchNewsApi from "hooks/reactQuery/useNewsApi";
+import useDebounce from "hooks/useDebounce";
 import { Input } from "neetoui";
 
 import Card from "./Card";
@@ -18,10 +20,10 @@ const NewsMode = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
 
-  // const debounceValue = useDebounce(searchTerm);
+  const debounceValue = useDebounce(searchTerm);
 
-  // const { data: { articles: news = [] } = {} } = useFetchNewsApi(debounceValue);
-  const news = [{ id: 1 }, { id: 2 }];
+  const { data: { articles: news = [] } = {} } = useFetchNewsApi(debounceValue);
+  // const news = [{ id: 1 }, { id: 2 }];
 
   const handleSourceClick = () => {
     setIsOpenModal(true);
@@ -64,17 +66,21 @@ const NewsMode = () => {
             </div>
           }
         />
-        <div className=" mt-6 h-5/6 ">
-          <div className="flex justify-start px-10 py-1">
-            <FilterBar />
+        {news.length === 0 ? (
+          <EmptyPage text="No news to show" />
+        ) : (
+          <div className=" mt-6 h-5/6 ">
+            <div className="flex justify-start px-10 py-1">
+              <FilterBar />
+            </div>
+            <div className="mt-16 h-5/6  px-10">
+              {news.map(newsItem => (
+                <Card key={newsItem.title} />
+              ))}
+            </div>
+            <div className="flex justify-end px-10 py-2">Pagination</div>
           </div>
-          <div className="mt-16 h-5/6  px-10">
-            {news.map(newsItem => (
-              <Card key={newsItem.title} />
-            ))}
-          </div>
-          <div className="flex justify-end px-10 py-2">Pagination</div>
-        </div>
+        )}
         {isOpenModal && (
           <ChangeSource
             isOpenModal={isOpenModal}
