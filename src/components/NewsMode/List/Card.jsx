@@ -5,7 +5,7 @@ const Card = ({ title, description, publishedAt, author, url, urlToImage }) => {
   const publishDate = dayjs(publishedAt).format("DD	MMMM YYYY");
 
   return (
-    <div className="neeto-ui-rounded-lg grid grid-cols-6 gap-4 bg-white p-3 shadow-sm sm:p-4 sm:shadow-lg">
+    <div className="neeto-ui-rounded-lg mt-3 grid grid-cols-6 gap-4 bg-white p-3 shadow-sm sm:p-4 sm:shadow-lg">
       <div className="col-span-4 gap-4 space-y-2 lg:col-span-5">
         <Typography className="truncate font-medium" style="h3">
           {title}

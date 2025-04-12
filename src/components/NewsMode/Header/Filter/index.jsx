@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import { Filter as FilterIcon } from "neetoicons";
 import { Button } from "neetoui";
 
-import Pane from "./Pane";
+import FilterPane from "./FilterPane";
 
 const Filter = () => {
   const [isFilterPaneOpen, setIsFilterPaneOpen] = useState(false);
@@ -15,7 +15,7 @@ const Filter = () => {
   return (
     <div className="relative">
       <Button icon={FilterIcon} style="secondary" onClick={toggleFilterPane} />
-      <Pane closePane={toggleFilterPane} isOpen={isFilterPaneOpen} />
+      <FilterPane closePane={toggleFilterPane} isOpen={isFilterPaneOpen} />
     </div>
   );
 };

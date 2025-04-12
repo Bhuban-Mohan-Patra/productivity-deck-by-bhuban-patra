@@ -3,7 +3,7 @@ import { useState } from "react";
 import { MenuHorizontal } from "neetoicons";
 import { Button } from "neetoui";
 
-import Modal from "./Modal";
+import SourcesModal from "./SourceModel";
 
 const Sources = () => {
   const [isSourcesModalOpen, setIsSourcesModalOpen] = useState(false);
@@ -13,7 +13,7 @@ const Sources = () => {
   return (
     <>
       <Button icon={MenuHorizontal} style="text" onClick={toggleModal} />
-      <Modal closeModal={toggleModal} isOpenModal={isSourcesModalOpen} />
+      <SourcesModal closeModal={toggleModal} isOpenModal={isSourcesModalOpen} />
     </>
   );
 };

@@ -37,8 +37,8 @@ const Header = () => {
   };
 
   return (
-    <div className="border-b p-4">
-      <div className="flex">
+    <div className="w-full px-4 py-4">
+      <div className="flex justify-between">
         <div className="flex flex-1 items-center gap-4">
           <Typography className="font-bold" style="h1">
             News Mode
@@ -46,14 +46,16 @@ const Header = () => {
           <Sources />
           <Filter />
         </div>
-        <Input
-          className="w-96 flex-grow-0"
-          placeholder="Search keyword or a phrase"
-          suffix={<Search />}
-          type="search"
-          value={searchKey}
-          onChange={handleSearchKeyChange}
-        />
+        <div>
+          <Input
+            className="w-96 flex-grow-0"
+            placeholder="Search keyword or a phrase"
+            suffix={<Search />}
+            type="search"
+            value={searchKey}
+            onChange={handleSearchKeyChange}
+          />
+        </div>
       </div>
     </div>
   );

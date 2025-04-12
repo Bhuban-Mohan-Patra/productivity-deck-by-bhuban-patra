@@ -50,7 +50,7 @@ const List = () => {
         </div>
       )}
       {!noNewsAvailable && (
-        <div className="flex justify-center py-2">
+        <div className="flex justify-end py-2">
           <Pagination
             count={totalResults}
             navigate={handlePageNavigation}
