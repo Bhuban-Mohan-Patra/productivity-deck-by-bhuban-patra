@@ -4,6 +4,7 @@ import { Delete } from "@bigbinary/neeto-icons";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import classNames from "classnames";
 import { Alert, Button, Input, Typography } from "neetoui";
+import { useTranslation } from "react-i18next";
 
 const Column = ({ title, tasks, setColumns, columns }) => {
   const [inputTask, setInputTask] = useState("");
@@ -12,14 +13,14 @@ const Column = ({ title, tasks, setColumns, columns }) => {
   const [currentIndexToDelete, setCurrentIndexToDelete] = useState("");
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
+  const { t } = useTranslation();
+
   const handleClick = () => {
     setIsAddTask(true);
   };
 
   const handleEnterClick = () => {
-    if (inputTask.trim() === "") {
-      alert("Enter task");
-    } else {
+    if (inputTask.trim() !== "") {
       setColumns({
         ...columns,
         [title]: [...tasks, inputTask.trim()],
@@ -87,7 +88,7 @@ const Column = ({ title, tasks, setColumns, columns }) => {
             {provided.placeholder}
             {isAddTask && (
               <Input
-                placeholder="Enter task"
+                placeholder={t("kanban.enterTask")}
                 type="text"
                 value={inputTask}
                 onChange={event => setInputTask(event.target.value)}
@@ -100,17 +101,17 @@ const Column = ({ title, tasks, setColumns, columns }) => {
       <Button
         className="mt-4 justify-center rounded py-2 text-sm"
         disabled={isAddTask}
-        label="Add new task +"
+        label={t("kanban.addNewTask")}
         style="text"
         onClick={handleClick}
       />
       <Alert
-        cancelButtonLabel="Cancel"
+        cancelButtonLabel={t("common.cancel")}
         closeOnOutsideClick={false}
         isOpen={isDeleteAlertOpen}
-        message="Are you want to delete task"
-        submitButtonLabel="Delete"
-        title="Delete task"
+        message={t("kanban.deleteTaskMessage")}
+        submitButtonLabel={t("common.delete")}
+        title={t("kanban.deleteTaskTitle")}
         onClose={() => setIsDeleteAlertOpen(false)}
         onSubmit={handleConfirmDeleteTask}
       />
