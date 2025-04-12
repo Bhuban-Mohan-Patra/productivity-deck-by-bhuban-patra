@@ -13,11 +13,12 @@ import axios from "axios";
 //   axios.get("", {
 //     params: { q },
 //   });
-const fetch = ({ searchTerm }) => {
+
+const fetch = ({ searchTerm, page = 1, pageSize = 3 }) => {
   console.log("API calling with search term:", searchTerm);
 
   return axios.get("/everything", {
-    params: { q: searchTerm },
+    params: { q: searchTerm, page, pageSize },
   });
 };
 

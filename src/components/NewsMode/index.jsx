@@ -8,7 +8,7 @@ import {
 import { Sidebar, Header, EmptyPage } from "components/commons";
 import useFetchNewsApi from "hooks/reactQuery/useNewsApi";
 import useDebounce from "hooks/useDebounce";
-import { Input } from "neetoui";
+import { Input, Pagination } from "neetoui";
 
 import Card from "./Card";
 import ChangeSource from "./ChangeSource";
@@ -19,11 +19,21 @@ const NewsMode = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const debounceValue = useDebounce(searchTerm);
 
-  const { data: { articles: news = [] } = {} } = useFetchNewsApi(debounceValue);
+  const { data: { articles: news = [], totalResults } = {} } = useFetchNewsApi(
+    debounceValue,
+    currentPage
+  );
   // const news = [{ id: 1 }, { id: 2 }];
+
+  const handlePageNavigation = page => {
+    console.log("Navigating to page:", page);
+    setCurrentPage(page);
+  };
+  // history.push(buildUrl(routes.root, mergeLeft({ page }, queryParams)));
 
   const handleSourceClick = () => {
     setIsOpenModal(true);
@@ -78,7 +88,14 @@ const NewsMode = () => {
                 <Card key={newsItem.title} />
               ))}
             </div>
-            <div className="flex justify-end px-10 py-2">Pagination</div>
+            <div className="flex justify-end px-10 py-2">
+              <Pagination
+                count={totalResults}
+                navigate={handlePageNavigation}
+                pageNo={currentPage || 1}
+                pageSize={10}
+              />
+            </div>
           </div>
         )}
         {isOpenModal && (
