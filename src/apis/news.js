@@ -1,27 +1,25 @@
-// import axios from "axios";
-
-// const fetch = ({ searchTerm }) =>
-//   axios.get("/everything", { params: { q: searchTerm } });
-
-// const newsApi = { fetch };
-
-// export default newsApi;
+import {
+  NEWS_API_EVERYTHING_ENDPOINT,
+  NEWS_API_TOP_HEADLINES_ENDPOINT,
+} from "constants";
 
 import axios from "axios";
 
-// const searchArticles = ({ q }) =>
-//   axios.get("", {
-//     params: { q },
-//   });
+const search = params => {
+  if (params.category) {
+    const { sources, ...rest } = params;
+    console.log(sources);
 
-const fetch = ({ searchTerm, page = 1, pageSize = 3 }) => {
-  console.log("API calling with search term:", searchTerm);
+    return axios.get(NEWS_API_TOP_HEADLINES_ENDPOINT, {
+      params: { ...rest, pageSize: 4 },
+    });
+  }
 
-  return axios.get("/everything", {
-    params: { q: searchTerm, page, pageSize },
+  return axios.get(NEWS_API_EVERYTHING_ENDPOINT, {
+    params: { ...params, pageSize: 4 },
   });
 };
 
-const newsApi = { fetch };
+const moviesApi = { search };
 
-export default newsApi;
+export default moviesApi;

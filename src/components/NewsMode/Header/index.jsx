@@ -1,9 +1,9 @@
 import { useState } from "react";
 
+import { Search } from "@bigbinary/neeto-icons";
 import useFuncDebounce from "hooks/useFuncDebounce";
 import useQueryParams from "hooks/useQueryParams";
 import { filterNonNull } from "neetocist";
-import { Search } from "neetoicons/icons";
 import { Input, Typography } from "neetoui";
 import { assoc } from "ramda";
 import { useHistory } from "react-router-dom";

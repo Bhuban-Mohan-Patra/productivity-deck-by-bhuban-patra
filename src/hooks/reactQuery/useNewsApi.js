@@ -1,4 +1,4 @@
-import { QUERY_KEYS } from "constants";
+import { QUERY_KEYS } from "constants/query";
 
 import newsApi from "apis/news";
 import { useQuery } from "react-query";

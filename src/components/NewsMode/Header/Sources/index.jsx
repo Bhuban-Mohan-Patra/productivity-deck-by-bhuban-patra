@@ -3,7 +3,7 @@ import { useState } from "react";
 import { MenuHorizontal } from "neetoicons";
 import { Button } from "neetoui";
 
-import Modal from "./Model";
+import Modal from "./Modal";
 
 const Sources = () => {
   const [isSourcesModalOpen, setIsSourcesModalOpen] = useState(false);
