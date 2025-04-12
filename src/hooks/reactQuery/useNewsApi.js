@@ -3,9 +3,14 @@ import { QUERY_KEYS } from "constants/query";
 import newsApi from "apis/news";
 import { useQuery } from "react-query";
 
-export const useFetchNews = params =>
-  useQuery({
-    queryKey: [QUERY_KEYS.NEWS, params],
-    queryFn: () => newsApi.fetch(params),
-    enabled: !!params.searchTerm,
+export const useFetchNewsApi = searchTerm => {
+  console.log("Searchterm is ", searchTerm);
+
+  return useQuery({
+    queryKey: [QUERY_KEYS.NEWS, searchTerm],
+    queryFn: () => newsApi.fetch({ searchTerm }),
+    enabled: !!searchTerm,
   });
+};
+
+export default useFetchNewsApi;
