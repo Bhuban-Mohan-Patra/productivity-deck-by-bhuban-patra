@@ -1,3 +1,3 @@
 export const QUERY_KEYS = {
-  NEWS: "news",
+  NEWS_SEARCH: "news_search",
 };

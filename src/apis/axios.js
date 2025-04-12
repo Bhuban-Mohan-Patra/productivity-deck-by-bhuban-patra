@@ -1,35 +1,28 @@
-import {
-  keysToCamelCase,
-  serializeKeysToSnakeCase,
-} from "@bigbinary/neeto-cist";
+import { NEWS_API_KEY, NEWS_API_URL } from "constants";
+
 import axios from "axios";
-import { evolve } from "ramda";
+import { Toastr } from "neetoui";
+import convertKeysToCamelCase from "utils/convertKeysToCamelCase";
+
+const handleErrorResponse = error => {
+  if (error.response && error.response.data) {
+    const { status, code, message } = error.response.data;
+
+    if (status === "error" && code === "parameterInvalid") {
+      Toastr.error(message, { autoClose: 2000 });
+    } else {
+      Toastr.error("An unexpected error occurred.", { autoClose: 3000 });
+    }
+  } else {
+    Toastr.error("A network error occurred. Please try again.", {
+      autoClose: 3000,
+    });
+  }
+};
 
 const transformResponseKeysToCamelCase = response => {
-  if (response.data) response.data = keysToCamelCase(response.data);
+  if (response.data) response.data = convertKeysToCamelCase(response.data);
 };
-
-const responseInterceptors = () => {
-  axios.interceptors.response.use(response => {
-    transformResponseKeysToCamelCase(response);
-
-    return response.data;
-  });
-};
-
-const requestInterceptors = () => {
-  axios.interceptors.request.use(evolve({ data: serializeKeysToSnakeCase }));
-};
-
-// const requestInterceptors = () => {
-//   axios.interceptors.request.use(config => {
-//     if (config.data) {
-//       config.data = serializeKeysToSnakeCase(config.data);
-//     }
-
-//     return config;
-//   });
-// };
 
 const setHttpHeaders = () => {
   axios.defaults.headers = {
@@ -38,27 +31,18 @@ const setHttpHeaders = () => {
   };
 };
 
-// const setHttpHeaders = () => {
-//   axios.defaults.headers = {
-//     Accept: "application/json",
-//     "Content-Type": "application/json",
-//     "X-Api-Key": process.env.REACT_APP_NEWS_API_KEY,
-//   };
-// };
+const responseInterceptors = () => {
+  axios.interceptors.response.use(
+    response => (transformResponseKeysToCamelCase(response), response.data),
+    error => (handleErrorResponse(error), Promise.reject(error))
+  );
+};
 
-export default function initializeAxios() {
-  axios.defaults.baseURL = "https://newsapi.org/v2";
-  axios.defaults.params = {
-    apikey: "8493175e3f06422595723966526b93df",
-  };
+const initializeAxios = () => {
+  axios.defaults.baseURL = NEWS_API_URL;
+  axios.defaults.params = { apikey: NEWS_API_KEY };
   setHttpHeaders();
   responseInterceptors();
-  requestInterceptors();
-}
+};
 
-// export default function initializeAxios() {
-//   axios.defaults.baseURL = "https://newsapi.org/v2/everything";
-//   setHttpHeaders();
-//   responseInterceptors();
-//   requestInterceptors();
-// }
+export default initializeAxios;
