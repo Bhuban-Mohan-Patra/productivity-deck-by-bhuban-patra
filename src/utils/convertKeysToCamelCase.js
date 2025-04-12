@@ -2,8 +2,8 @@ import { is, map, pipe, replace, toLower } from "ramda";
 
 const toCamelCase = str =>
   pipe(
-    replace(/[-_](.)/g, (_, char) => char.toUpperCase()), // Convert snake_case & kebab-case
-    replace(/^(.)/, toLower) // Ensure first letter is lowercase
+    replace(/[-_](.)/g, (_, char) => char.toUpperCase()),
+    replace(/^(.)/, toLower)
   )(str);
 
 const mapKeys = (fn, obj) =>

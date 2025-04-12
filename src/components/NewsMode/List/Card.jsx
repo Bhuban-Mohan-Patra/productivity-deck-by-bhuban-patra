@@ -1,7 +1,9 @@
 import dayjs from "dayjs";
 import { Typography } from "neetoui";
+import { useTranslation } from "react-i18next";
 
 const Card = ({ title, description, publishedAt, author, url, urlToImage }) => {
+  const { t } = useTranslation();
   const publishDate = dayjs(publishedAt).format("DD	MMMM YYYY");
 
   return (
@@ -18,11 +20,11 @@ const Card = ({ title, description, publishedAt, author, url, urlToImage }) => {
             {description}
           </Typography>
           <a href={url} rel="noreferrer" target="_blank">
-            Know more
+            {t("news.knowMore")}
           </a>
         </div>
         <Typography className="neeto-ui-text-gray-500" style="body2">
-          {publishDate} . {author || "Anonymous"}
+          {publishDate} . {author || t("news.anonymous")}
         </Typography>
       </div>
       <div className="col-span-2 overflow-hidden rounded-lg lg:col-span-1">

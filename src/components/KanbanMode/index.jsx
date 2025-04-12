@@ -1,59 +1,122 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { DragDropContext } from "@hello-pangea/dnd";
-import { Sidebar, Header } from "components/commons";
+import { Delete } from "@bigbinary/neeto-icons";
+import { Draggable, Droppable } from "@hello-pangea/dnd";
+import classNames from "classnames";
+import { Alert, Button, Input, Typography } from "neetoui";
 import { useTranslation } from "react-i18next";
-import useKanbanStore from "stores/useKanbanStore";
 
-import Column from "./Column";
-
-const KanbanMode = () => {
-  const { columns, setColumns } = useKanbanStore();
+const Column = ({ title, tasks, setColumns, columns }) => {
+  const [inputTask, setInputTask] = useState("");
+  const [isAddTask, setIsAddTask] = useState(false);
+  const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
+  const [currentIndexToDelete, setCurrentIndexToDelete] = useState("");
+  const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const { t } = useTranslation();
 
-  const handleDragEnd = result => {
-    const { source, destination } = result;
+  const handleClick = () => {
+    setIsAddTask(true);
+  };
 
-    if (!destination) return;
+  const handleEnterClick = () => {
+    if (inputTask.trim() !== "") {
+      setColumns({
+        ...columns,
+        [title]: [...tasks, inputTask.trim()],
+      });
+      setIsAddTask(false);
+      setInputTask("");
+    }
+  };
 
-    const sourceColumn = source.droppableId;
-    const destinationColumn = destination.droppableId;
+  const handleDeleteTaskClick = id => {
+    setCurrentIndexToDelete(id);
+    setIsDeleteAlertOpen(true);
+  };
 
-    const sourceTasks = [...columns[sourceColumn]];
-    const [removed] = sourceTasks.splice(source.index, 1);
-
-    const destinationTasks = [...columns[destinationColumn]];
-    destinationTasks.splice(destination.index, 0, removed);
-
+  const handleConfirmDeleteTask = () => {
+    const newTasks = tasks.filter((_, index) => index !== currentIndexToDelete);
     setColumns({
       ...columns,
-      [sourceColumn]: sourceTasks,
-      [destinationColumn]: destinationTasks,
+      [title]: newTasks,
     });
+    setIsDeleteAlertOpen(false);
   };
 
   return (
-    <div className="flex h-screen">
-      <Sidebar />
-      <div className="w-full">
-        <Header title={t("kanban.kanbanMode")} />
-        <DragDropContext onDragEnd={handleDragEnd}>
-          <div className="mx-4 mt-20 flex h-3/4 justify-center gap-8 px-4">
-            {Object.entries(columns).map(([title, tasks]) => (
-              <Column
-                columns={columns}
-                key={title}
-                setColumns={setColumns}
-                tasks={tasks}
-                title={title}
-              />
+    <div className="flex w-80 flex-col rounded border border-black bg-white p-4">
+      <Typography className="font-semibold">{title}</Typography>
+      <Droppable droppableId={title}>
+        {provided => (
+          <div
+            className="mt-6 flex flex-1 flex-col gap-2"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            {tasks.map((task, index) => (
+              <Draggable
+                draggableId={`${title}-${index}`}
+                index={index}
+                key={`${title}-${index}`}
+              >
+                {provided => (
+                  <div
+                    ref={provided.innerRef}
+                    className={classNames(
+                      "flex justify-between rounded-md border px-2 py-1 text-lg",
+                      {
+                        "line-through": title === "Done",
+                      }
+                    )}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    onMouseLeave={() => setHoveredIndex(null)}
+                  >
+                    {task}
+                    {hoveredIndex === index && (
+                      <Delete
+                        className="cursor-pointer"
+                        onClick={() => handleDeleteTaskClick(index)}
+                      />
+                    )}
+                  </div>
+                )}
+              </Draggable>
             ))}
+            {provided.placeholder}
+            {isAddTask && (
+              <Input
+                placeholder={t("kanban.enterTask")}
+                type="text"
+                value={inputTask}
+                onChange={event => setInputTask(event.target.value)}
+                onKeyDown={event => event.key === "Enter" && handleEnterClick()}
+              />
+            )}
           </div>
-        </DragDropContext>
-      </div>
+        )}
+      </Droppable>
+      <Button
+        className="mt-4 justify-center rounded py-2 text-sm"
+        disabled={isAddTask}
+        label={t("kanban.addNewTask")}
+        style="text"
+        onClick={handleClick}
+      />
+      <Alert
+        cancelButtonLabel={t("common.cancel")}
+        closeOnOutsideClick={false}
+        isOpen={isDeleteAlertOpen}
+        message={t("kanban.deleteTaskMessage")}
+        submitButtonLabel={t("common.delete")}
+        title={t("kanban.deleteTaskTitle")}
+        onClose={() => setIsDeleteAlertOpen(false)}
+        onSubmit={handleConfirmDeleteTask}
+      />
     </div>
   );
 };
 
-export default KanbanMode;
+export default Column;

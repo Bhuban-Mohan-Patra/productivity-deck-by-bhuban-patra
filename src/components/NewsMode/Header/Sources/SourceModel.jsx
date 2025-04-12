@@ -5,6 +5,7 @@ import useQueryParams from "hooks/useQueryParams";
 import { filterNonNull } from "neetocist";
 import { Button, Modal, Select, Typography } from "neetoui";
 import { assoc } from "ramda";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import routes from "routes";
 import { buildUrl } from "utils/url";
@@ -15,7 +16,7 @@ const SourcesModal = ({ isOpenModal, closeModal }) => {
   const [newsSources, setNewsSources] = useState(
     () => getNewsSourceOptions()[0]
   );
-
+  const { t } = useTranslation();
   const history = useHistory();
 
   const queryParams = useQueryParams();
@@ -47,22 +48,22 @@ const SourcesModal = ({ isOpenModal, closeModal }) => {
     >
       <Modal.Header>
         <Typography style="h2" weight="bold">
-          Change source
+          {t("news.sourcesModal.title")}
         </Typography>
       </Modal.Header>
       <Modal.Body>
         <Select
           isMulti
-          label="NewSource"
+          label={t("news.sourcesModal.sourceLabel")}
           options={newsSourceOptions}
-          placeholder="selectSource"
+          placeholder={t("news.sourcesModal.sourcePlaceholder")}
           value={newsSources}
           onChange={handleSourcesChange}
         />
       </Modal.Body>
       <Modal.Footer className="flex justify-end gap-2">
-        <Button label="Cancel" style="text" onClick={closeModal} />
-        <Button label="Save" style="primary" onClick={closeModal} />
+        <Button label={t("common.cancel")} style="text" onClick={closeModal} />
+        <Button label={t("common.save")} style="primary" onClick={closeModal} />
       </Modal.Footer>
     </Modal>
   );
