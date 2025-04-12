@@ -2,12 +2,15 @@ import React from "react";
 
 import { DragDropContext } from "@hello-pangea/dnd";
 import { Sidebar, Header } from "components/commons";
+import { useTranslation } from "react-i18next";
 import useKanbanStore from "stores/useKanbanStore";
 
 import Column from "./Column";
 
 const KanbanMode = () => {
   const { columns, setColumns } = useKanbanStore();
+
+  const { t } = useTranslation();
 
   const handleDragEnd = result => {
     const { source, destination } = result;
@@ -28,18 +31,13 @@ const KanbanMode = () => {
       [sourceColumn]: sourceTasks,
       [destinationColumn]: destinationTasks,
     });
-
-    console.log("result", result);
-    console.log("sourceCol", sourceColumn);
-    console.log("columns", columns);
-    console.log("columns[sourceCol]", columns[sourceColumn]);
   };
 
   return (
     <div className="flex h-screen">
       <Sidebar />
       <div className="w-full">
-        <Header title="Kanban mode" />
+        <Header title={t("kanban.kanbanMode")} />
         <DragDropContext onDragEnd={handleDragEnd}>
           <div className="mx-4 mt-20 flex h-3/4 justify-center gap-8 px-4">
             {Object.entries(columns).map(([title, tasks]) => (

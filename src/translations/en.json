@@ -7,5 +7,16 @@
     "Pomodoro": "Pomodoro",
     "Shortbreak": "Short break",
     "Longbreak": "Long break"
+  },
+  "kanban": {
+    "kanbanMode": "Kanban mode",
+    "enterTask": "Enter task",
+    "addNewTask": "Add new task +",
+    "deleteTaskTitle": "Delete task",
+    "deleteTaskMessage": "Are you sure you want to delete the task?"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "delete": "Delete"
   }
 }
