@@ -1,7 +1,7 @@
 import React from "react";
 
 const Header = ({ title }) => (
-  <div className="flex justify-between  pt-6 text-2xl font-bold">
+  <div className="flex px-6 pt-6 text-2xl font-bold">
     <div>{title}</div>
   </div>
 );

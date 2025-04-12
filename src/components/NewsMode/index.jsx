@@ -3,16 +3,16 @@ import { Sidebar } from "components/commons";
 import Header from "./Header";
 import List from "./List";
 
-const News = () => (
-  <div className="flex h-screen">
+const NewsMode = () => (
+  <div className="flex h-screen w-screen">
     <Sidebar />
-    <div className="flex h-full flex-col">
+    <div className="flex h-full w-full flex-col">
       <Header />
-      <main className="bg-background flex flex-1 flex-col space-y-4 overflow-y-auto p-4 md:col-span-2 lg:col-span-3">
+      <div className="bg-background flex flex-1 flex-col space-y-4 overflow-y-auto p-4 md:col-span-2 lg:col-span-3">
         <List />
-      </main>
+      </div>
     </div>
   </div>
 );
 
-export default News;
+export default NewsMode;

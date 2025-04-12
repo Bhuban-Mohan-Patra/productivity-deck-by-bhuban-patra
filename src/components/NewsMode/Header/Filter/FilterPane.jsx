@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import useFuncDebounce from "hooks/useFuncDebounce";
 import useQueryParams from "hooks/useQueryParams";
 import { filterNonNull } from "neetocist";
-import { Button, DatePicker, Input, Select, Typography } from "neetoui";
+import { Button, DatePicker, Input, Pane, Select, Typography } from "neetoui";
 import { assoc } from "ramda";
 import { useHistory } from "react-router-dom";
 import routes from "routes";
@@ -12,7 +12,7 @@ import { buildUrl } from "utils/url";
 
 import { getNewsCategoryOptions } from "./utils";
 
-const Pane = ({ isOpen, closePane }) => {
+const FilterPane = ({ isOpen, closePane }) => {
   const [searchKey, setSearchKey] = useState("");
   const [publicationDate, setPublicationDate] = useState(dayjs());
   const [newsCategories, setNewsCategories] = useState(
@@ -49,7 +49,9 @@ const Pane = ({ isOpen, closePane }) => {
         updatedQueryParams = assoc("searchTerm", keywords, updatedQueryParams);
       }
 
-      history.replace(buildUrl(routes.news, filterNonNull(updatedQueryParams)));
+      history.replace(
+        buildUrl(routes.news.index, filterNonNull(updatedQueryParams))
+      );
     }
   );
 
@@ -115,4 +117,4 @@ const Pane = ({ isOpen, closePane }) => {
   );
 };
 
-export default Pane;
+export default FilterPane;

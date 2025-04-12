@@ -3,7 +3,7 @@ import { useState } from "react";
 import useFuncDebounce from "hooks/useFuncDebounce";
 import useQueryParams from "hooks/useQueryParams";
 import { filterNonNull } from "neetocist";
-import { Button, Select, Typography } from "neetoui";
+import { Button, Modal, Select, Typography } from "neetoui";
 import { assoc } from "ramda";
 import { useHistory } from "react-router-dom";
 import routes from "routes";
@@ -11,7 +11,7 @@ import { buildUrl } from "utils/url";
 
 import { getNewsSourceOptions } from "./utils";
 
-const Modal = ({ isOpenModal, closeModal }) => {
+const SourcesModal = ({ isOpenModal, closeModal }) => {
   const [newsSources, setNewsSources] = useState(
     () => getNewsSourceOptions()[0]
   );
@@ -25,7 +25,7 @@ const Modal = ({ isOpenModal, closeModal }) => {
   const updateFiltersInQueryParams = useFuncDebounce(sources => {
     history.replace(
       buildUrl(
-        routes.news,
+        routes.news.index,
         filterNonNull(assoc("sources", sources.join(","), queryParams))
       )
     );
@@ -55,7 +55,7 @@ const Modal = ({ isOpenModal, closeModal }) => {
           isMulti
           label="NewSource"
           options={newsSourceOptions}
-          placeholder="SelectSource"
+          placeholder="selectSource"
           value={newsSources}
           onChange={handleSourcesChange}
         />
@@ -68,4 +68,4 @@ const Modal = ({ isOpenModal, closeModal }) => {
   );
 };
 
-export default Modal;
+export default SourcesModal;
