@@ -27,9 +27,7 @@ const NewsMode = () => {
     useSearchNews(searchParams);
 
   const handlePageNavigation = page =>
-    history.replace(
-      buildUrl(routes.news.index, mergeLeft({ page }, queryParams))
-    );
+    history.replace(buildUrl(routes.news, mergeLeft({ page }, queryParams)));
 
   const currentPage = Number(propOr(DEFAULT_PAGE_NUMBER, "page", queryParams));
 
