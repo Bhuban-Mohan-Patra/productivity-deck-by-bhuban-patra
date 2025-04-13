@@ -41,5 +41,5 @@ export const removeTagFromQueryParams = (queryParams, key, value, history) => {
     }
   }
 
-  return history.replace(buildUrl(routes.news.index, updatedQueryParams));
+  return history.replace(buildUrl(routes.news, updatedQueryParams));
 };
